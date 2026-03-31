@@ -1,4 +1,4 @@
-// registro.js - Exclusivo para el formulario de inscripción
+// registro.js - Optimizado para Coomerc
 import { db } from './firebase-config.js';
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -10,7 +10,7 @@ const fileInput = document.getElementById('file-input');
 const imagePreview = document.getElementById('image-preview');
 const previewContainer = document.getElementById('preview-container');
 
-// 1. Previsualización
+// 1. Previsualización de imagen
 fileInput?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -45,20 +45,24 @@ form?.addEventListener('submit', async (e) => {
     const mensajeDiv = document.getElementById('mensaje');
     
     btn.disabled = true;
-    btn.innerText = "⏳ Procesando...";
+    btn.innerText = "⌛ Procesando...";
 
     try {
         let urlFotoFinal = "https://via.placeholder.com/400x300?text=Coomerc+Negocio";
         if (fileInput.files[0]) {
-            btn.innerText = "⏳ Subiendo foto...";
+            btn.innerText = "⌛ Subiendo foto...";
             urlFotoFinal = await subirACloudinary(fileInput.files[0]);
         }
 
+        // --- CAPTURA DE DATOS CORREGIDA ---
         const nombre = document.getElementById('nombre').value.trim();
         const ciudad = document.getElementById('ciudad').value.trim();
         const barrio = document.getElementById('barrio').value.trim();
         const prefijo = document.getElementById('reg-prefijo')?.value || "57";
         const numeroLimpio = document.getElementById('whatsapp').value.replace(/\D/g, "");
+        
+        // AQUÍ ESTABA EL ERROR: Definimos la variable historia antes de usarla
+        const historiaTexto = document.getElementById('historia')?.value.trim() || "";
 
         const datos = {
             nombre,
@@ -71,7 +75,7 @@ form?.addEventListener('submit', async (e) => {
             barrioDisplay: barrio,
             direccion: document.getElementById('direccion')?.value.trim() || "",
             descripcion: document.getElementById('descripcion').value.trim(),
-            historia: historia,
+            historia: historiaTexto, // Variable corregida
             imagen: urlFotoFinal,
             domicilio: document.getElementById('reg-domicilio').checked,
             createdAt: new Date()
@@ -85,6 +89,7 @@ form?.addEventListener('submit', async (e) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (error) {
+        console.error("Error en el registro:", error);
         mensajeDiv.innerHTML = `<p style="color:red;">❌ Error: ${error.message}</p>`;
     } finally {
         btn.disabled = false;
