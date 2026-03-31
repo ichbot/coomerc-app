@@ -1,0 +1,1196 @@
+/* =====================================================
+   COOMERC APP CORE - ESTILOS LIMPIOS
+===================================================== */
+
+:root {
+  --primary: #1f6feb;
+  --coomerc-cyan: #38bdf8;
+  --dark: #0f172a;
+  --surface: #ffffff;
+  --bg: #f5f7fa;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ----------- RESET ----------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.container {
+  width: 92%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ----------- HEADER COMPACTO ----------- */
+.coomerc-header {
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* 1. Forzamos que el header pueda envolver elementos en móvil */
+.header-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que el buscador baje si no cabe */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+/* 2. El logo y las acciones (botones) se quedan arriba */
+.header-logo {
+    order: 1; /* Primero el logo */
+}
+
+.logo-img {
+    height: 35px;       /* Altura controlada para móvil */
+    max-width: 150px;   /* Evita que se desborde en pantallas pequeñas */
+    width: auto;        /* Mantiene la proporción 13:4 que hiciste */
+    object-fit: contain;
+    display: block;
+}
+
+/* En Desktop (PC y Tablets) le damos más libertad */
+@media (min-width: 768px) {
+    .logo-img {
+        height: 50px; 
+        max-width: 250px; /* Aquí ya puede lucirse más */
+    }
+}
+
+
+/* --- TARJETA DE NO RESULTADOS --- */
+.no-results-card {
+    grid-column: 1 / -1; /* Ocupa todo el ancho del grid */
+    background: white;
+    padding: 40px 20px;
+    border-radius: var(--radius);
+    text-align: center;
+    border: 2px dashed var(--border);
+    margin-top: 20px;
+}
+
+.no-results-icon {
+    font-size: 3rem;
+    color: var(--coomerc-cyan);
+    margin-bottom: 15px;
+}
+
+.no-results-card h3 {
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.btn-pionero {
+    display: inline-block;
+    margin-top: 15px;
+    background: var(--dark);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-pionero:hover {
+    background: var(--primary);
+    transform: scale(1.05);
+}
+
+.text-mini {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+
+.header-actions {
+    order: 2; /* Luego los botones de la derecha */
+    display: flex;
+    gap: 8px;
+}
+
+.btn-registro-header {
+    background: #2563eb;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-registro-header:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* En celulares muy pequeños, escondemos el texto si estorba */
+@media (max-width: 360px) {
+    .btn-registro-header span { display: none; }
+}
+
+.menu-toggle {
+  background: var(--dark);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* ----------- SECCIÓN BUSCADOR ----------- */
+.search-section {
+  background: var(--surface);
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Buscador */
+.header-search {
+  order: 3;
+  width: 100%;
+  margin-top: 5px;
+
+  background: #f1f5f9;
+  border-radius: 25px;
+
+  padding: 8px 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+
+  transition: all 0.2s ease;
+}
+
+/* efecto cuando el usuario escribe */
+.header-search:focus-within {
+  border-color: var(--coomerc-cyan);
+  box-shadow: 0 4px 15px rgba(56,189,248,0.25);
+}
+
+/* input */
+.header-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+
+  padding: 10px;
+  font-size: 1rem;
+
+  outline: none;
+}
+
+/* icono lupa */
+.search-icon {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+#btn-search:active {
+    transform: scale(0.95);
+    background: linear-gradient(90deg, #00B7F1 0%, #F100F1 100%);
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* --- SIDEBAR (MENÚ LATERAL) --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px; /* <--- ESTO LO ESCONDE: Lo manda fuera de la pantalla a la derecha */
+  width: 280px;
+  height: 100vh;
+  background: var(--surface);
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  z-index: 2000;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Animación suave */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cuando tiene la clase 'open', se desliza hacia adentro */
+.sidebar.open {
+  right: 0; 
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+#closeMenu {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar-nav a:hover {
+  background: #f1f5f9;
+  color: var(--primary);
+}
+
+/* FONDO OSCURO (OVERLAY) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none; /* Escondido por defecto */
+  z-index: 1500;
+  backdrop-filter: blur(2px); /* Un toque pro de desenfoque */
+}
+
+.overlay.show {
+  display: block;
+}
+/* ----------- BLOQUE DE UBICACIÓN (DISEÑO LIMPIO) ----------- */
+.location-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 15px 0;
+    padding: 15px;
+    background: transparent; /* Quitamos el fondo blanco tipo caja */
+    border-bottom: 1px solid var(--border); /* Solo una línea sutil abajo */
+}
+
+.location-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary);
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.location-chip i {
+    color: var(--coomerc-cyan);
+}
+
+.location-change {
+    display: flex;
+    gap: 8px;
+}
+
+.location-change input {
+    flex: 1;
+    background: #f1f5f9; /* Un gris muy suave para el input */
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.location-change input:focus {
+    border-color: var(--coomerc-cyan);
+    background: white;
+}
+
+.location-change button {
+    background: var(--dark);
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ----------- BARRA DE BÚSQUEDA (SECCIÓN) ----------- */
+.search-section {
+    padding: 10px 0;
+    background: transparent;
+}
+
+.header-search {
+    background: #f1f5f9; /* Fondo gris suave para que resalte el texto */
+    border-radius: 25px; /* Forma de píldora moderna */
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.header-search:focus-within {
+    background: white;
+    border-color: var(--coomerc-cyan);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.header-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px;
+    font-size: 1rem;
+    outline: none;
+    color: var(--text);
+}
+
+.search-icon {
+    color: var(--text-light);
+    margin-right: 10px;
+}
+
+/* ----------- CATEGORÍAS (SCROLL) ----------- */
+/* Contenedor principal de categorías */
+.categories-wrapper {
+    display: flex;
+    flex-wrap: nowrap; /* ¡IMPORTANTE! Esto evita que se pongan uno debajo de otro */
+    gap: 15px;
+    overflow-x: auto; /* Habilita el scroll horizontal */
+    padding: 10px 5px 20px;
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iPhone */
+    scrollbar-width: none; /* Oculta barra en Firefox */
+}
+
+.categories-wrapper::-webkit-scrollbar {
+    display: none; /* Oculta barra en Chrome/Safari */
+}
+
+/* Ajuste de la tarjeta para que no se estire */
+.category-card {
+    flex: 0 0 90px; /* No permite que la tarjeta se encoja o crezca */
+    background: white;
+    border-radius: 16px;
+    padding: 12px 5px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+}
+
+.category-icon {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.category-card span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: block;
+}
+
+/* ----------- GRID DE NEGOCIOS DESTACADOS ----------- */
+
+
+/* Carrusel de Destacados */
+.destacados-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 0 20px 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-destacada {
+    min-width: 160px;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+    border: 2px solid #dbeafe; /* Un borde azul clarito */
+    position: relative;
+    text-align: center;
+}
+
+.badge-premium {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fbbf24; /* Dorado */
+    color: #92400e;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.card-destacada img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+
+.card-destacada h4 {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    color: #1e293b;
+}
+
+.btn-wa-sm {
+    display: block;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    font-size: 0.7rem;
+    padding: 5px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* 1. Para que las categorías y los destacados no se peguen */
+.destacados-section {
+    padding: 15px 10px;
+    background: #f8fafc; /* Un fondo gris casi blanco para diferenciar la zona VIP */
+    margin-bottom: 20px;
+}
+
+/* 2. Para que las fotos de los destacados siempre sean un círculo perfecto */
+.card-destacada img {
+    width: 70px; /* Un pelín más grandes */
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 3. Estilo para la etiqueta de categoría pequeña en destacados */
+.categoria-tag-sm {
+    display: inline-block;
+    font-size: 0.65rem;
+    background: #e2e8f0;
+    color: #475569;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+/* ----------- GRID DE NEGOCIOS ----------- */
+#negocios-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* ----------- TARJETA BASE ----------- */
+.card-negocio {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #f1f5f9;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    max-height: 90px;
+
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ✅ MINIATURA CUADRADA (ANTES ERA REDONDA) */
+.card-negocio::before {
+    content: '';
+    min-width: 60px;
+    height: 60px;
+    background-image: var(--bg-img);
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 12px; /* 🔥 AQUÍ EL CAMBIO */
+    margin-right: 15px;
+    border: 2px solid #f1f5f9;
+}
+
+/* Ocultamos contenido pesado en compacto */
+.card-negocio .img-container,
+.card-negocio .descripcion,
+.card-negocio .acciones-card,
+.card-negocio .direccion-fisica,
+.card-negocio .solo-domicilio {
+    display: none;
+}
+
+/* ----------- ESTADO ABIERTO ----------- */
+.card-negocio.is-open {
+    max-height: 1000px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+}
+
+.card-negocio.is-open::before {
+    display: none;
+}
+
+.card-negocio.is-open .img-container,
+.card-negocio.is-open .descripcion,
+.card-negocio.is-open .acciones-card,
+.card-negocio.is-open .direccion-fisica,
+.card-negocio.is-open .solo-domicilio {
+    display: block;
+}
+
+.card-negocio.is-open .acciones-card {
+    display: grid;
+}
+
+/* ----------- IMAGEN ----------- */
+.img-container {
+    position: relative;
+    width: 100%;
+    height: 180px;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-negocio {
+    transition: box-shadow 0.3s ease;
+}
+
+.card-negocio:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ----------- INFO ----------- */
+.info-negocio {
+    padding: 18px;
+    width: 100%;
+}
+
+.info-negocio h3 {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    color: #0f172a;
+}
+.direccion-detalle {
+    display: none;
+}
+
+.card-negocio.is-open .direccion-detalle {
+    display: block;
+}
+/* ----------- BOTONES ----------- */
+.acciones-card {
+    display: grid;
+    grid-template-columns: 1fr 48px;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.btn-wa-card {
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.btn-share-card {
+    background: #f1f5f9;
+    border-radius: 12px;
+}
+
+/* ----------- MODAL SHARE (ESTILO SOHO) ----------- */
+#share-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7); /* Fondo oscuro translúcido */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px); /* Efecto vidrio */
+}
+
+#share-menu.hidden { 
+    display: none !important; 
+}
+
+.share-content {
+    background: white;
+    padding: 25px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.share-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.share-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    border: 1px solid #f1f5f9;
+    border-radius: 16px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.share-btn:hover {
+    background: #f1f5f9;
+    transform: translateY(-2px);
+}
+
+.btn-cerrar-modal {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* ----------- BADGE DE DOMICILIO (FLOTANTE) ----------- */
+.tag-domicilio {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #22c55e; /* Verde vibrante */
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Asegurar que el contenedor de la imagen permita el posicionamiento */
+.img-container {
+    position: relative; /* Esto es vital para que el badge se pegue a la imagen */
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+/* ----------- WHATSAPP FLOTANTE ----------- */
+.responsive-chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN (Tablet & Desktop)
+===================================================== */
+
+@media (min-width: 768px) {
+  /* 1. Header más espacioso */
+  .header-container {
+    padding: 15px 40px;
+  }
+
+  .header-logo img {
+    height: 50px; /* Logo un poco más grande en PC */
+  }
+
+  /* 2. Categorías: En PC ya no necesitan scroll, se ven todas */
+  .servicios-categorias {
+    justify-content: center; /* Centramos los iconos */
+    overflow-x: visible; 
+    gap: 40px;
+    padding: 30px 0;
+  }
+
+  .icon-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+
+  .categoria-item span {
+    font-size: 0.9rem;
+  }
+
+  /* 3. Grid de Negocios: 3 o 4 columnas en Desktop */
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* 4. En pantallas muy grandes, 4 columnas */
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* 5. Buscador más ancho y centrado */
+  .header-search {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .location-bar {
+    max-width: 400px;
+    margin: 20px auto; /* Centramos la barra de ubicación */
+  }
+}
+
+/* Efecto Hover solo para cuando hay mouse */
+@media (hover: hover) {
+  .card-negocio:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-color: var(--coomerc-cyan);
+  }
+}
+
+
+.categories-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 10px 5px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Esto crea un efecto de "desvanecido" a la derecha para indicar que hay más */
+.categories-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 30px;
+    height: 80px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.8));
+    pointer-events: none;
+}
+
+/* ================= SECCIÓN CONTACTO ================= */
+.coomerc-contact {
+    padding: 80px 20px;
+    background: #f1f5f9;
+}
+.contact-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+}
+.contact-info h3, .contact-form h3 {
+    margin-bottom: 20px;
+    color: #0f172a;
+}
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+}
+.contact-info ul li {
+    margin-bottom: 15px;
+    color: #475569;
+}
+.contact-info ul li i {
+    color: #3b82f6;
+    margin-right: 10px;
+}
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.contact-form input, .contact-form textarea {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: inherit;
+}
+.contact-form-button-submit {
+    background: #1e293b;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.contact-form-button-submit:hover {
+    background: #3b82f6;
+}
+
+/* ================= SECCIÓN ABOUT (ESTILO COOMERC) ================= */
+.coomerc-about {
+    padding: 100px 20px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.about-container h2 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 25px;
+    letter-spacing: -1px;
+}
+
+.about-container p {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    font-size: 1.2rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Tarjetas de Características */
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-box {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+
+.feature-box i {
+    font-size: 3rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.feature-box h4 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #1e293b;
+}
+
+/* =========================================
+   COOMERC COUNTERS
+========================================= */
+.coomerc-counters {
+  background: #0f172a; /* Azul oscuro de tu marca */
+  padding: 50px 20px;
+  color: #ffffff;
+}
+
+.counters-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+}
+
+.counter-item {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.counter-item:hover {
+  transform: translateY(-5px);
+}
+
+.counter-item i {
+  font-size: 2.5rem;
+  color: #38bdf8; /* Celeste Coomerc */
+  margin-bottom: 15px;
+  display: block;
+}
+
+.counter-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  color: #fff;
+}
+
+.counter-label {
+  display: block;
+  font-size: 14px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+  .counter-item { min-width: 45%; }
+}
+ 
+ /* =========================================
+   COOMERC FOOTER
+========================================= */
+
+ #coomerc-footer {
+    background: #0f172a; /* Azul noche profesional */
+    color: #f8fafc;
+    padding: 50px 20px 20px;
+    margin-top: 50px;
+    border-top: 5px solid #2563eb; /* Línea azul de acento */
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-col h3.footer-logo {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.footer-col h4 {
+    color: #3b82f6;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.footer-col p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+    color: #fff;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    background: #1e293b;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: background 0.3s;
+}bus
+
+.social-links a:hover {
+    background: #2563eb;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1e293b;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+
+.btn-share-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-share-card:hover {
+    background: #eff6ff;
+    color: #2563eb;
+    border-color: #bfdbfe;
+}
+
+.share-menu {
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 999;
+}
+
+.share-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================================
+   BOTÓN INSTALAR COMO PWA
+========================================= */
+
+.btn-footer {
+  margin-top: 12px;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.btn-footer:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.btn-footer:active {
+  transform: scale(0.97);
+}
+
+
+.btn-sidebar {
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  display: none;
+  transition: all 0.25s ease;
+}
+
+.btn-sidebar:hover {
+  opacity: 0.85;
+}
